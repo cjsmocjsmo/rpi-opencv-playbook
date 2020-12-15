@@ -28,6 +28,10 @@ This is an Ansible playbook that will install opencv and all it's dependencies o
  git clone https://github.com/cjsmocjsmo/rpi-opencv-playbook.git
  
 ## cd ./rpi-opencv-playbook && ansible-playbook rpi-opencv-install.yml
+
+# NOTE
+
+I have not used a virtualenviroment on purpose.  This setup may not survive a system upgrade so use with caution.
  
  
  
