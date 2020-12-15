@@ -1,0 +1,63 @@
+- name: Install Opencv On fresh install of rasbian
+  hosts: picam1 # the name you gave your pi in /etc/ansible/hosts
+  remote_user: pi
+  become: true
+  become_user: root
+
+  tasks:
+  - name: Uninstall Wolfram-engine
+    apt: name=wolfram-engine state=absent
+
+  - name: Uninstall Libreoffice
+    apt: name=libreoffice* state=absent
+
+  - name: Run autoclean to cleanup not needed packages
+    apt: autoclean=true
+
+  - name: Update all packages
+    apt: name="*" state=latest update_cache=true force_apt_get=true
+
+  - name: Install Opencv dependencies
+    apt: name={{ item }} state=latest update_cache=true
+    loop:
+      - build-essential
+      - cmake
+      - pkg-config
+      - libjpeg-dev
+      - libtiff5-dev
+      - libjasper-dev
+      - libpng-dev
+      - libavcodec-dev
+      - libavformat-dev
+      - libswscale-dev
+      - libv4l-dev
+      - libxvidcore-dev
+      - libx264-dev
+      - libfontconfig1-dev
+      - libcairo2-dev
+      - libgdk-pixbuf2.0-dev
+      - libcanberra-gtk-module
+      - libpango1.0-dev
+      - libgtk2.0-dev
+      - libgtk-3-dev
+      - libatlas-base-dev
+      - libhdf5-dev
+      - libhdf5-serial-dev
+      - libhdf5-103
+      - libqtgui4
+      - libqtwebkit4
+      - libqt4-test
+      - gfortran
+      - python3-pyqt5
+      - python3-dev
+
+  - name: Install Opencv and more dependencies from pip
+    pip:
+      name: 
+        - opencv-contrib-python==4.1.0.25
+        - imutils
+        - imageZMQ
+        - numpy
+        - picamera
+      executable: pip3
+
